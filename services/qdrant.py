@@ -1,11 +1,19 @@
 from qdrant_client.http import models
 from services.embedder import cria_embeddings_query
+from filters.gera_filtros import monta_filtros
 import os
 
+def normaliza_query(query:str) -> str:
+    return query.upper()
+
 def execute_search(client, model, query:str):
+    query = normaliza_query(query)
+
     embeds = cria_embeddings_query(model, query)
 
-    filtros = None
+    filtros = monta_filtros(query)
+
+    print('\n\n\nfiltros:', filtros)
 
     resultado_busca = client.query_points(
         collection_name=os.getenv('NOME_COLLECTION'),
