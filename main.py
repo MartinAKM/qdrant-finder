@@ -1,4 +1,7 @@
-from sentence_transformers import SentenceTransformer
+import transformers.utils.import_utils as import_utils
+if not hasattr(import_utils, 'is_torch_fx_available'):
+    import_utils.is_torch_fx_available = lambda: False
+from FlagEmbedding import BGEM3FlagModel
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -10,7 +13,7 @@ import os
 load_dotenv()
 
 print('Iniciando model...')
-model = SentenceTransformer(os.getenv('MODEL_EMBEDDER'))
+model = BGEM3FlagModel(os.getenv('MODEL_EMBEDDER'), use_fp16=True)
 print('Concluído')
 
 print('Iniciando conexão com qdrant...')

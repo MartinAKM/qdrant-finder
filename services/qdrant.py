@@ -15,11 +15,11 @@ def execute_search(client, model, query:str):
                 using='dense',
                 limit=os.getenv('RETURN_POINTS_LIMIT')
             ),
-            models.Prefetch(
-                query=embeds[1],
-                using='sparse',
-                limit=os.getenv('RETURN_POINTS_LIMIT')
-            )
+            # models.Prefetch(
+            #     query=embeds[1],
+            #     using='sparse',
+            #     limit=os.getenv('RETURN_POINTS_LIMIT')
+            # )
         ],
         query=models.FusionQuery(fusion=models.Fusion.RRF),
         query_filter=filtros,
