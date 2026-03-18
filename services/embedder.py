@@ -6,12 +6,12 @@ def retorna_embedd_esparso(encode):
     indices = [int(k) for k in pesos_lexicos.keys()]
     valores = [float(v) for v in pesos_lexicos.values()]
 
-    return models.SparseVector(indices, valores)
+    return models.SparseVector(indices=indices, values=valores)
 
 def cria_embeddings_query(model, query:str) -> tuple:
     encode = model.encode(query, return_dense=True, return_sparse=True, return_colbert_vecs=False)
 
     embedd_denso = encode['dense_vecs'].tolist()
-    embedd_esparso = None#retorna_embedd_esparso(encode)
+    embedd_esparso = retorna_embedd_esparso(encode)
 
     return (embedd_denso, embedd_esparso)
